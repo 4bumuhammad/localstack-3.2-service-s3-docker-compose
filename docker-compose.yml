@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+  localstack:
+    image: localstack/localstack:3.2
+    container_name: localstack_s3
+    network_mode: bridge
+    environment:
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - SERVICES=s3
+      - EDGE_PORT=4566
+      # - PERSISTENCE=1
+      # - LOCALSTACK_API_KEY=${LOCALSTACK_API_KEY-}                   # required for Pro
+      - DEBUG=0
+      # - LS_LOG=trace
+    ports:
+      - "4566:4566"
+    volumes:
+      - ./localstack/localstack_root:/var/lib/localstack              # the LocalStack volume directory root
+      - "/var/run/docker.sock:/var/run/docker.sock"
